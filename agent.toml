@@ -1,0 +1,26 @@
+[model]
+url = "http://127.0.0.1:11434"
+name = "qwen3.5:9b"
+context = 8192
+temperature = 0.1
+timeout = 120
+max_steps = 24
+max_failures = 3
+
+[paths]
+workspace = "workspace"
+state = ".runtime/state"
+
+[browser]
+headless = true
+timeout_ms = 15000
+allowed_origins = ["https://example.com", "https://www.example.com", "https://demo.playwright.dev"]
+
+[desktop]
+applications = { notepad = "C:\\Windows\\System32\\notepad.exe" }
+
+[commands]
+test = ["{python}", "-m", "unittest", "discover", "-s", ".", "-v"]
+lint = ["{python}", "-m", "ruff", "check", "."]
+build = ["{python}", "-m", "compileall", "-q", "."]
+serve = ["{python}", "-m", "http.server", "8765", "--bind", "127.0.0.1"]

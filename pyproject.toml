@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "local-work-agent"
+version = "0.1.0"
+description = "Approval-gated local Windows agent using Ollama and deterministic automation"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+automation = ["playwright>=1.50,<2", "pywinauto>=0.6.9,<0.7; sys_platform == 'win32'", "pyautogui>=0.9.54,<0.10", "pillow>=11,<13"]
+dev = ["ruff>=0.11,<1"]
+desktop = ["fastapi>=0.115,<1", "uvicorn[standard]>=0.34,<1", "httpx>=0.28,<1", "psutil>=7,<8"]
+bundle = ["pyinstaller>=6,<7"]
+mcp = ["mcp==2.3.0", "mcp-types==2.3.0"]
+
+[project.scripts]
+local-agent = "local_agent.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["local_agent*"]
+
+[tool.setuptools.package-data]
+local_agent = ["evaluation_corpus_v*.json", "memory_recall_corpus_v*.json"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.uv]
+# Lock the Windows/Python 3.12 runtime used by setup and the frozen backend.
+# Other source-install targets require their own dependency resolution/validation.
+environments = ["sys_platform == 'win32' and python_version == '3.12'"]

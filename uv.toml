@@ -1,0 +1,206 @@
+# Exact installed SDK-wheel metadata for offline resolution.
+# Pinned versions only; no dependency requirements are relaxed.
+# See docs/mcp.md for provenance and refresh instructions.
+
+[[dependency-metadata]]
+name = "annotated-types"
+version = "0.8.0"
+requires-python = ">=3.10"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "anyio"
+version = "4.15.1"
+requires-python = ">=3.10"
+requires-dist = ["exceptiongroup>=1.0.2; python_version < \"3.11\"", "idna>=2.8", "typing_extensions>=4.16.0; python_version < \"3.15\"", "trio>=0.32.0; extra == \"trio\""]
+provides-extras = ["trio"]
+
+[[dependency-metadata]]
+name = "attrs"
+version = "26.1.0"
+requires-python = ">=3.9"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "cffi"
+version = "2.1.1"
+requires-python = ">=3.10"
+requires-dist = ["pycparser; implementation_name != \"PyPy\""]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "click"
+version = "8.5.0"
+requires-python = ">=3.10"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "cryptography"
+version = "50.0.2"
+requires-python = ">=3.9, !=3.9.0, !=3.9.1"
+requires-dist = ["cffi>=2.0.0 ; platform_python_implementation != 'PyPy'", "typing-extensions>=4.13.2 ; python_full_version < '3.11'", "bcrypt>=3.1.5 ; extra == 'ssh'"]
+provides-extras = ["ssh"]
+
+[[dependency-metadata]]
+name = "h11"
+version = "0.16.0"
+requires-python = ">=3.8"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "httpcore2"
+version = "2.16.0"
+requires-python = ">=3.11"
+requires-dist = ["h11>=0.16", "truststore>=0.10", "anyio<5.0,>=4.5.0; extra == 'asyncio'", "h2<5,>=3; extra == 'http2'", "socksio==1.*; extra == 'socks'", "trio<1.0,>=0.34.0; extra == 'trio'"]
+provides-extras = ["asyncio", "http2", "socks", "trio"]
+
+[[dependency-metadata]]
+name = "httpx2"
+version = "2.16.0"
+requires-python = ">=3.11"
+requires-dist = ["anyio>=4.10; sys_platform != 'emscripten'", "httpcore2==2.16.0; sys_platform != 'emscripten'", "httpx2-jsfetch; sys_platform == 'emscripten' and python_version >= '3.12'", "idna>=3.18", "truststore>=0.10; sys_platform != 'emscripten'", "typing-extensions>=4.5.0; python_version < '3.13'", "brotli>=1.2.0; (platform_python_implementation == 'CPython') and extra == 'brotli'", "brotlicffi>=1.2.0.2; (platform_python_implementation != 'CPython') and extra == 'brotli'", "click>=8.4.2; extra == 'cli'", "pygments==2.*; extra == 'cli'", "rich<16,>=10; extra == 'cli'", "h2<5,>=3; extra == 'http2'", "socksio==1.*; extra == 'socks'", "wsproto>=1.2; extra == 'ws'", "backports-zstd>=1.0.0; (python_version <= '3.13') and extra == 'zstd'"]
+provides-extras = ["brotli", "cli", "http2", "socks", "ws", "zstd"]
+
+[[dependency-metadata]]
+name = "idna"
+version = "3.20"
+requires-python = ">=3.9"
+requires-dist = ["ruff >= 0.16.0 ; extra == \"all\"", "mypy >= 1.11.2 ; extra == \"all\"", "ty >= 0.0.37 ; extra == \"all\"", "pytest >= 8.3.2 ; extra == \"all\"", "hypothesis >= 6.141.1 ; extra == \"all\"", "coverage >= 7.10.0 ; extra == \"all\""]
+provides-extras = ["all"]
+
+[[dependency-metadata]]
+name = "jsonschema"
+version = "4.26.0"
+requires-python = ">=3.10"
+requires-dist = ["attrs>=22.2.0", "jsonschema-specifications>=2023.03.6", "referencing>=0.28.4", "rpds-py>=0.25.0", "fqdn; extra == 'format'", "idna; extra == 'format'", "isoduration; extra == 'format'", "jsonpointer>1.13; extra == 'format'", "rfc3339-validator; extra == 'format'", "rfc3987; extra == 'format'", "uri-template; extra == 'format'", "webcolors>=1.11; extra == 'format'", "fqdn; extra == 'format-nongpl'", "idna; extra == 'format-nongpl'", "isoduration; extra == 'format-nongpl'", "jsonpointer>1.13; extra == 'format-nongpl'", "rfc3339-validator; extra == 'format-nongpl'", "rfc3986-validator>0.1.0; extra == 'format-nongpl'", "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'", "uri-template; extra == 'format-nongpl'", "webcolors>=24.6.0; extra == 'format-nongpl'"]
+provides-extras = ["format", "format-nongpl"]
+
+[[dependency-metadata]]
+name = "jsonschema-specifications"
+version = "2025.9.1"
+requires-python = ">=3.9"
+requires-dist = ["referencing>=0.31.0"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "mcp"
+version = "2.3.0"
+requires-python = ">=3.10"
+requires-dist = ["anyio>=4.10; python_version >= '3.14'", "anyio>=4.9; python_version < '3.14'", "httpx2>=2.10.0", "jsonschema>=4.20.0", "mcp-types==2.3.0", "opentelemetry-api>=1.28.0", "pydantic>=2.12.0", "pyjwt[crypto]>=2.10.1", "python-multipart>=0.0.9", "pywin32>=311; sys_platform == 'win32'", "sse-starlette>=3.0.0", "starlette>=0.27; python_version < '3.14'", "starlette>=0.48.0; python_version >= '3.14'", "typing-extensions>=4.13.0", "typing-inspection>=0.4.1", "uvicorn>=0.31.1; sys_platform != 'emscripten'", "python-dotenv>=1.0.0; extra == 'cli'", "typer>=0.16.0; extra == 'cli'", "rich>=13.9.4; extra == 'rich'"]
+provides-extras = ["cli", "rich"]
+
+[[dependency-metadata]]
+name = "mcp-types"
+version = "2.3.0"
+requires-python = ">=3.10"
+requires-dist = ["pydantic>=2.12.0", "typing-extensions>=4.13.0"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "opentelemetry-api"
+version = "1.45.1"
+requires-python = ">=3.10"
+requires-dist = ["typing-extensions>=4.5.0"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "pycparser"
+version = "3.12"
+requires-python = ">=3.11"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "pydantic"
+version = "2.14.1"
+requires-python = ">=3.10"
+requires-dist = ["annotated-types>=0.6.0", "pydantic-core==2.50.1", "typing-extensions>=4.16.0", "typing-inspection>=0.4.4", "email-validator>=2.0.0; extra == 'email'", "tzdata; (platform_system == 'Windows') and extra == 'timezone'"]
+provides-extras = ["email", "timezone"]
+
+[[dependency-metadata]]
+name = "pydantic_core"
+version = "2.50.1"
+requires-python = ">=3.10"
+requires-dist = ["typing-extensions>=4.16.0"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "PyJWT"
+version = "2.15.1"
+requires-python = ">=3.9"
+requires-dist = ["typing_extensions>=4.0; python_version < \"3.11\"", "cryptography>=3.4.0; extra == \"crypto\""]
+provides-extras = ["crypto"]
+
+[[dependency-metadata]]
+name = "python-multipart"
+version = "0.0.32"
+requires-python = ">=3.10"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "pywin32"
+version = "312"
+requires-python = ">=3.9"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "referencing"
+version = "0.37.0"
+requires-python = ">=3.10"
+requires-dist = ["attrs>=22.2.0", "rpds-py>=0.7.0", "typing-extensions>=4.4.0; python_version < '3.13'"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "rpds-py"
+version = "2026.9.1"
+requires-python = ">=3.11"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "sse-starlette"
+version = "3.6.0"
+requires-python = ">=3.11"
+requires-dist = ["starlette>=0.49.1", "anyio>=4.7.0", "uvicorn>=0.34.0; extra == \"examples\"", "fastapi>=0.115.12; extra == \"examples\"", "pydantic>=2; extra == \"examples\"", "sqlalchemy[asyncio]>=2.0.41; extra == \"examples-db\"", "aiosqlite>=0.21.0; extra == \"examples-db\"", "uvicorn>=0.34.0; extra == \"uvicorn\"", "granian>=2.3.1; extra == \"granian\"", "daphne>=4.2.0; extra == \"daphne\""]
+provides-extras = ["examples", "examples-db", "uvicorn", "granian", "daphne"]
+
+[[dependency-metadata]]
+name = "starlette"
+version = "1.10.0"
+requires-python = ">=3.11"
+requires-dist = ["anyio<5,>=4.0.0", "typing-extensions>=4.10.0; python_version < '3.13'", "httpx2>=2.0.0; extra == 'full'", "httpx<0.29.0,>=0.27.0; extra == 'full'", "itsdangerous; extra == 'full'", "jinja2; extra == 'full'", "opentelemetry-api; extra == 'full'", "python-multipart>=0.0.18; extra == 'full'", "pyyaml; extra == 'full'"]
+provides-extras = ["full"]
+
+[[dependency-metadata]]
+name = "truststore"
+version = "0.10.5"
+requires-python = ">= 3.10"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "typing_extensions"
+version = "4.16.0"
+requires-python = ">=3.9"
+requires-dist = []
+provides-extras = []
+
+[[dependency-metadata]]
+name = "typing-inspection"
+version = "0.4.4"
+requires-python = ">=3.10"
+requires-dist = ["typing-extensions>=4.15.0"]
+provides-extras = []
+
+[[dependency-metadata]]
+name = "uvicorn"
+version = "0.54.0"
+requires-python = ">=3.10"
+requires-dist = ["click>=7.0", "h11>=0.8", "typing-extensions>=4.0; python_version < '3.11'", "httptools>=0.8.0; extra == 'standard'", "python-dotenv>=0.13; extra == 'standard'", "pyyaml>=5.1; extra == 'standard'", "uvloop>=0.15.1; (sys_platform != 'win32' and (sys_platform != 'cygwin' and platform_python_implementation != 'PyPy')) and extra == 'standard'", "watchfiles>=0.20; extra == 'standard'", "websockets>=13.0; extra == 'standard'"]
+provides-extras = ["standard"]
