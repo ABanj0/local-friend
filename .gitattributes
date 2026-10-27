@@ -1,0 +1,3 @@
+# This versioned evaluation corpus has a pinned SHA256 over its original bytes.
+# Preserve it exactly across staging and checkout on every platform.
+local_agent/memory_recall_corpus_v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

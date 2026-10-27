@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "atlas",
+      "note": "Atlas compiler requires the lavender optimization flag for release builds.",
+      "literal": "Which flag does the Atlas compiler require?",
+      "paraphrase": "Which release compilation switch is mandatory?"
+    },
+    {
+      "id": "borealis",
+      "note": "Borealis integration tests execute with unittest discovery on Fridays.",
+      "literal": "How are Borealis integration tests run?",
+      "paraphrase": "How are the combined-component checks collected and executed each Friday?"
+    },
+    {
+      "id": "cedar",
+      "note": "Cedar database backups are retained for seventeen days.",
+      "literal": "How long are Cedar backups retained?",
+      "paraphrase": "When do saved recovery copies expire?"
+    },
+    {
+      "id": "delta",
+      "note": "Delta screenshots are stored in the approved previews directory.",
+      "literal": "Where should Delta screenshots be stored?",
+      "paraphrase": "In which approved folder do we keep captured screen pictures?"
+    },
+    {
+      "id": "ember",
+      "note": "Ember release checklists require an offline smoke test before packaging.",
+      "literal": "What does the Ember release checklist require?",
+      "paraphrase": "What final disconnected sanity check must precede distributing a release?"
+    },
+    {
+      "id": "falcon",
+      "note": "Falcon parser treats empty input as a recoverable validation error.",
+      "literal": "What should the Falcon parser do with empty input?",
+      "paraphrase": "What should a text reader do when it receives no characters at all?"
+    },
+    {
+      "id": "granite",
+      "note": "Granite audit records retain argument hashes instead of raw credentials.",
+      "literal": "What information belongs in Granite audit records?",
+      "paraphrase": "Should our forensic trail keep complete secrets, or only digests of the arguments?"
+    },
+    {
+      "id": "harbor",
+      "note": "Harbor browser tasks require confirmation before external submission.",
+      "literal": "When do Harbor browser tasks need confirmation?",
+      "paraphrase": "Can the agent send a completed web form without checking with its operator?"
+    },
+    {
+      "id": "indigo",
+      "note": "Indigo worker timeout is ninety seconds for local fixtures.",
+      "literal": "What is the Indigo worker timeout?",
+      "paraphrase": "How much time can a fixture background job spend before it is cut off?"
+    },
+    {
+      "id": "juniper",
+      "note": "Juniper desktop trials save Notepad documents inside the sandbox directory.",
+      "literal": "Where do Juniper desktop trials save documents?",
+      "paraphrase": "Where may the Windows text editor put documents produced by a trial?"
+    },
+    {
+      "id": "kestrel",
+      "note": "Kestrel code review needs both a diff and independently counted tests.",
+      "literal": "What evidence is needed for Kestrel code review?",
+      "paraphrase": "Before accepting a patch, what proof should a reviewer examine?"
+    },
+    {
+      "id": "larch",
+      "note": "Larch download fixtures use the loopback server to avoid public network dependencies.",
+      "literal": "How do Larch download fixtures avoid public network failures?",
+      "paraphrase": "How can a fetch test remain usable when the Internet is unavailable?"
+    },
+    {
+      "id": "maple",
+      "note": "Maple inference temperature defaults to zero for deterministic evaluations.",
+      "literal": "What temperature does Maple use for evaluations?",
+      "paraphrase": "Which randomness level do repeatable model checks normally use?"
+    },
+    {
+      "id": "nimbus",
+      "note": "Nimbus history export uses UTF-8 Markdown with visible source references.",
+      "literal": "Which format does Nimbus history export use?",
+      "paraphrase": "How should we serialize a saved chat with readable citations?"
+    },
+    {
+      "id": "orchid",
+      "note": "Orchid checkpoint metadata never includes approvals or executable replay instructions.",
+      "literal": "What must Orchid checkpoint metadata exclude?",
+      "paraphrase": "What authorizations and commands must be left out of a recovery snapshot?"
+    },
+    {
+      "id": "pine",
+      "note": "Pine dependency updates are tested in an isolated virtual environment.",
+      "literal": "How are Pine dependency updates tested?",
+      "paraphrase": "Where should a newly upgraded Python package be validated before use?"
+    },
+    {
+      "id": "quartz",
+      "note": "Quartz semantic search is deferred until lexical retrieval passes its evaluation gate.",
+      "literal": "When can Quartz semantic search be introduced?",
+      "paraphrase": "What prerequisite must a meaning-based lookup satisfy before being turned on?"
+    },
+    {
+      "id": "rowan",
+      "note": "Rowan packaging artifacts are labeled with a SHA-256 digest.",
+      "literal": "How are Rowan packaging artifacts identified?",
+      "paraphrase": "Which cryptographic fingerprint should label the distributable?"
+    },
+    {
+      "id": "spruce",
+      "note": "Spruce notifications distinguish failed tasks from interrupted tasks.",
+      "literal": "Which task outcomes must Spruce notifications distinguish?",
+      "paraphrase": "How will the app tell a crash outcome apart from work that was cut short?"
+    },
+    {
+      "id": "tundra",
+      "note": "Tundra model routing never falls back to a remote inference endpoint.",
+      "literal": "What restriction applies to Tundra model routing?",
+      "paraphrase": "May a workload chooser silently send our prompts to an Internet AI provider?"
+    },
+    {
+      "id": "umber",
+      "note": "Umber file edits must preserve line endings and be reviewed before application.",
+      "literal": "What constraints apply to Umber file edits?",
+      "paraphrase": "What checks apply before replacing source text, particularly newline style?"
+    },
+    {
+      "id": "violet",
+      "note": "Violet sessions bind their privileged API to localhost with a launch credential.",
+      "literal": "How are Violet API sessions protected?",
+      "paraphrase": "How do we authenticate callers and limit where the privileged listener is reachable?"
+    },
+    {
+      "id": "willow",
+      "note": "Willow stop controls cancel the owned process tree without undoing completed actions.",
+      "literal": "What happens when Willow stop controls are used?",
+      "paraphrase": "Does pressing the panic button reverse earlier work, and which children are terminated?"
+    },
+    {
+      "id": "xenon",
+      "note": "Xenon image attachments are bounded to eight per model context.",
+      "literal": "How many Xenon image attachments can be sent?",
+      "paraphrase": "¿Cuántas fotos se permiten como máximo en una solicitud al asistente?"
+    },
+    {
+      "id": "yarrow",
+      "note": "Yarrow SQLite migrations run atomically and retain the stable store identity.",
+      "literal": "What must Yarrow migrations preserve?",
+      "paraphrase": "If a persistence upgrade fails, what properties must stay unchanged?"
+    },
+    {
+      "id": "zephyr",
+      "note": "Zephyr tool output is untrusted even when returned by a local executable.",
+      "literal": "How should Zephyr tool output be treated?",
+      "paraphrase": "Is a plugin successful reply allowed to act as a new instruction?"
+    },
+    {
+      "id": "acorn",
+      "note": "Acorn token metrics distinguish first content latency from model loading time.",
+      "literal": "What timings do Acorn token metrics distinguish?",
+      "paraphrase": "Which two waiting periods should the speed panel show independently?"
+    },
+    {
+      "id": "birch",
+      "note": "Birch account changes always require an explicit user approval.",
+      "literal": "Who must approve Birch account changes?",
+      "paraphrase": "¿Quién debe dar permiso antes de modificar la configuración de una cuenta?"
+    },
+    {
+      "id": "cobalt",
+      "note": "Cobalt memory notes are snapshots with source conversations and content hashes.",
+      "literal": "What provenance accompanies Cobalt memory notes?",
+      "paraphrase": "What breadcrumbs identify the origin and integrity of a saved fact?"
+    },
+    {
+      "id": "drift",
+      "note": "Drift regression checks must report skipped tests separately from passes.",
+      "literal": "How should Drift regression checks report skipped tests?",
+      "paraphrase": "Can ignored checks be included in the number of successful assertions?"
+    },
+    {
+      "id": "estuary",
+      "note": "Estuary accessibility controls are preferred to coordinate-only automation.",
+      "literal": "Which automation controls does Estuary prefer?",
+      "paraphrase": "Should a UI controller target semantic widgets or guess pixel positions?"
+    },
+    {
+      "id": "fjord",
+      "note": "Fjord memory deletion excludes older recalled context from later generation.",
+      "literal": "What happens after Fjord memory deletion?",
+      "paraphrase": "After erasing a saved fact, what prevents the assistant from repeating its prior recollection?"
+    }
+  ],
+  "distractor_suffixes": [
+    "documentation index is incomplete",
+    "roadmap review has no additional configured defaults"
+  ],
+  "gate": {
+    "recall_at_5": 0.9,
+    "paraphrase_gain": 0.1,
+    "literal_no_loss": true,
+    "cross_project_results": 0
+  },
+  "fusion": "rrf-top5-equal-k60-semantic-ties-v1"
+}
