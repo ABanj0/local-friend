@@ -1,5 +1,10 @@
 # Local Windows Agent
 
+For a blank native window or startup failure, run the [native diagnostic check](docs/native-diagnostics.md)
+from a normal Windows session. Its report keeps native acceptance separate from diagnostics.
+For the installed retry limit and manual restart path, use the
+[operator native recovery check](docs/native-recovery-check.md) after closing Studio.
+
 Type `/` in the Studio composer for commands such as `/plan`, `/goal`, `/test`, `/diff`
 and `/summarize`. See [slash command usage and goal behavior](docs/slash-commands.md).
 
@@ -7,6 +12,8 @@ Studio supports chat rename/delete/search/export, file and image attachments, sc
 paste and confirmed screen capture. See [chat features and limits](docs/chat-features.md).
 Agent tasks support Unified, Coding-only, Browser-only and Desktop-only tool access.
 See [profiles, CLI examples and tool contracts](docs/tool-profiles.md).
+Coding and unified profiles can also enable the [read-only local MCP project provider](docs/mcp.md).
+It is opt-in, uses a pinned stdio server, and preserves project scope, audit and cancellation.
 Configured unittest runs now have [persisted test observations](docs/test-verification.md),
 separate from model prose. Zero discovered tests are not verified; skips remain explicit.
 Coding writes also produce [artifact readback/hash evidence](docs/artifact-verification.md).
@@ -40,14 +47,64 @@ protected context stops with a clear notice. Stored conversations remain intact.
 Studio also has [explicit project memory](docs/project-memory.md): save notes or selected
 messages, search across conversations, inspect source references and confirm forgetting.
 Retrieved historical notes confer no permissions; memory remains local and project-scoped.
+Optional **Related-note retrieval** can index saved notes with an installed local embedding
+model. Confirm indexing, then **Enable related-note context** to use paraphrases in chats.
+Reindexing returns chats to keyword context; **Use keyword context** switches back explicitly.
+See the memory guide for model setup, scope, citations, stale indexes and forgetting.
+The authenticated file-memory API can preview and explicitly import approved UTF-8 project
+files. Saved excerpts show file/line provenance; changed sources lose retrieval eligibility.
+In **Project memory → Saved file sources**, enter a project-relative path, preview the
+excerpts and confirm saving. Use **Check sources**, **Review reimport**, or **Forget saved
+file** to manage snapshots. See the guide for limits and API usage.
 
 The [task-scoped activity panel](docs/studio-activity.md) lets you select a run within a
 conversation. Its activity, command output, context estimate and screenshot stay with
 that task; global approvals identify their source conversation.
 
+At narrow window widths, **Activity** opens the task drawer. Dialogs support keyboard
+focus containment, safe Escape dismissal and focus return; Escape denies a tool approval.
+The [bounded history API](docs/history-paging.md) is available for read-only integrations;
+the sidebar loads50 conversations at a time with **Older conversations** and stored-title
+search. Chat and Task history have older/newer/latest page controls; selected older runs
+retain their details while global approvals and emergency stop remain available.
+Message/export protocol checks and the actual-model chat/slash UI regression scenarios
+pass. Native connection IPC is bridged in browser tests; installed-app acceptance remains separate.
+Models & settings can create a [confirmed local Studio database backup](docs/studio-backups.md)
+while no task is owned. Saved copies include private chats/attachments and remain unencrypted.
+Select and inspect a backup to restore it with explicit confirmation and a backend restart.
+**Restore previous state** uses the fresh rollback copy. Original databases remain intact;
+unsent drafts and transient approvals are excluded.
+[Manual conversation retention](docs/studio-retention.md) offers saved age/recent/batch
+settings, an exact preview and explicit confirmation. Active work and the selected chat
+are protected; project files, backups and generations remain. No scheduled cleanup runs.
+
+Workspace also offers [resumable read-only inspections](docs/inspection-checkpoints.md)
+of explicitly selected UTF-8 files. Pause waits for an acknowledged completed step;
+explicit resume rechecks unchanged inputs and creates a linked task after restart.
+Other agent modes remain non-resumable. Checkpoints are private data included in backups.
+
+Workspace includes [scheduled read-only inspections](docs/interval-inspections.md): save
+selected files, a model, an interval, missed-run policy and display timezone. Runs use the
+existing read-only inspection worker while Studio is open. Disable cancels pending work;
+Emergency stop persists an automatic-work pause until you explicitly resume schedules.
+Workspace also supports [directory-triggered inspections](docs/directory-inspections.md):
+an approved directory establishes a baseline, then matching changed observations after
+debounce can queue an inspection of selected files. Incomplete scans launch nothing;
+changes wholly between polls can be missed. Both workflows share automatic-work pause.
+There is no always-on service or unattended mutation capability.
+
 Measured model results and tuning decisions are in
 [the local performance report](docs/model-performance.md). Repeat the checks with
 ` .\.venv\Scripts\python.exe -m local_agent.benchmark` while Studio has no active task.
+The optional [restricted-review development trial](docs/specialist-review-trial.md)
+compares single-pass, self-review and specialist review on fixed synthetic inputs.
+The current specialist failed its benefit gate; Studio delegation remains inactive.
+An optional [schema-probe context study](docs/probe-context-trial.md) observed lower
+warm-worker loading latency. Production defaults remain unchanged pending broader qualification.
+The [matched qualification evaluator](docs/probe-qualification.md) now includes a complete
+actual-model comparison: median worker time13.58s to7.08s, both profiles56/60 tasks.
+A case-level quality gate failed, so the faster setting remains unapplied; controlled
+cold/runtime adoption remains incomplete.
 
 ## Desktop application work
 
@@ -63,11 +120,20 @@ browser checks pass; native acceptance remains open after a managed-session WebV
 resource conflict. See [current evidence](IMPLEMENTATION.md).
 After installing prerequisites, run ` .\scripts\setup-desktop.ps1`, then
 ` .\desktop-dev.ps1`. The intended production build command is
-` .\scripts\build-desktop.ps1`; no Windows installer exists yet.
-The PyInstaller sidecar and optimized release EXE now build and pass 15 frozen runtime,
-security, approved-coding and real-model browser checks. NSIS download remains blocked
-by managed-session socket error 10013. Artifact hashes and build inputs are recorded in
-`dist/release-manifest.json`; installation remains unverified.
+` .\scripts\build-desktop.ps1 -ConfigLoaderRunner`. The owner-session build produced
+`desktop/src-tauri/target/release/bundle/nsis/Local Agent Studio_0.1.0_x64-setup.exe`.
+Artifact/source hashes match the manifest;17 frozen runtime/security/approved-coding/live-
+model browser,1 frozen MCP and7 Rust checks pass. Artifact hashes and build inputs are
+recorded in `dist/release-manifest.json`; native installation/upgrade remain unverified.
+
+If the installed app reports **Ollama is missing** while using this checkout's portable
+runtime, install the updated package, close Studio and run
+` .\scripts\configure-installed-ollama.ps1` from the checkout in normal PowerShell.
+It backs up the installed configuration and points it to the existing executable/models.
+See [installed Ollama configuration](docs/desktop.md#reuse-this-repositorys-portable-ollama-in-the-installed-app).
+The correction is now verified in the owner's installation: automatic model startup,
+completed chat and real browser/memory workflows pass. Full native control/recovery and
+upgrade acceptance remain open.
 
 The current acceptance baseline is dated **2026-10-22**. Required Python/API packages,
 Node, Rust and lockfiles are present. Earlier missing-tool and primary-model-access reports
