@@ -14,6 +14,8 @@ type Props={models:ModelStatus;model:string;telemetry:Telemetry;permissions:Reco
 const bytes=(n?:number|null)=>n==null?'Unavailable':`${(n/1024**3).toFixed(1)} GB`;
 export function ModelsPanel(props:Props){
   const {models,model,telemetry,permissions,connected,context,temperature,maxOutput,thinking,keepAlive,capabilities,capabilityError,setModel,setContext,setTemperature,setMaxOutput,setThinking,setKeepAlive,onStart,onRefresh}=props;
+  const execution=permissions?.coding_execution;
+  const executionLabel=execution&&typeof execution==='object'&&'label' in execution&&typeof execution.label==='string'?execution.label:'Execution status unavailable';
   return (<section className="settings-page">
         <div className="page-intro"><span className="eyebrow">YOUR LOCAL ENGINE</span><h2>Models & resources</h2><p>Choose a model installed in Ollama. Settings apply to your next task.</p></div>
         <div className="metrics"><div><Cpu/><small>GPU utilization</small><strong>{telemetry.gpu ? `${telemetry.gpu.percent}%` : 'Unavailable'}</strong></div>
@@ -51,6 +53,7 @@ export function ModelsPanel(props:Props){
         <BackupPanel connection={props.connection} busy={props.busy} onRestart={props.onRestoreRestart}/>
         <RetentionPanel connection={props.connection} busy={props.busy} protectedConversation={props.protectedConversation} onChanged={props.onRetentionChanged}/>
         <div className="panel"><h3>Permissions</h3><p className="muted">Sensitive actions always require approval. Scope changes are made in agent.toml.</p>
+          <p>Code/test commands: <strong>{executionLabel}</strong>. File edits, browser and desktop actions use their existing scopes.</p>
           <pre>{JSON.stringify(permissions || {}, null, 2)}</pre><p className="muted">General agent tasks cannot pause or resume. Workspace offers a separate selected-file read-only inspection with validated checkpoints.</p></div>
       </section>);
 }

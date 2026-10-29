@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 from .background import BackgroundCommand, readiness_config
+from .execution import backend
 from .file_ops import atomic_write
 from .patches import apply as apply_patch_set
 from .process import run_process
@@ -22,6 +23,7 @@ class Coding:
         self.output = None  # Trusted event sink; never a tool argument.
         self.background = None
         self.review_create = False  # Trusted UI configuration, never a model argument.
+        self.execution = backend(policy, self._host_command, lambda event: self.output(event) if self.output else None)
 
     def python(self):
         if not getattr(sys, "frozen", False):
@@ -93,6 +95,9 @@ class Coding:
         return {"path": path, "bytes": verification["observed_bytes"], "verification": verification}
 
     def command(self, name, cwd="."):
+        return self.execution.command(name, cwd)
+
+    def _host_command(self, name, cwd="."):
         if name not in self.policy.config["commands"]:
             raise Denied("Unknown command profile. Allowed profiles: "
                          + ", ".join(self.policy.config["commands"])
@@ -110,6 +115,7 @@ class Coding:
                            on_output=(lambda event: self.output({"profile": name, **event})) if self.output else None)
 
     def start(self, name, cwd="."):
+        self.execution.require("background")
         if name not in self.policy.config["commands"]:
             raise Denied("Unknown command profile")
         if name in self.processes:
@@ -154,6 +160,7 @@ class Coding:
             raise error
 
     def git(self, action, cwd=".", message="", path=""):
+        self.execution.require("git")
         directory = self.policy.path(cwd)
         executable = shutil.which("git")
         if not executable:

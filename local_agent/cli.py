@@ -10,6 +10,8 @@ from pathlib import Path
 
 from .agent import Agent
 from .config import load
+from .execution import descriptor as execution_descriptor
+from .execution import recover as recover_execution
 from .model import Ollama
 from .safety import Policy, Stopped, redact
 from .tool_spec import PROFILES
@@ -26,7 +28,7 @@ def approve(action, details):
 
 
 def doctor(config):
-    result = {"python": sys.version, "workspace": config["paths"]["workspace"],
+    result = {"python": sys.version, "workspace": config["paths"]["workspace"], "coding_execution": execution_descriptor(config),
               "dependencies": {name: importlib.util.find_spec(name) is not None
                                for name in ("playwright", "pywinauto", "pyautogui", "PIL")}}
     try:
@@ -56,6 +58,7 @@ def worker(config, objective, profile="unified"):
 
 
 def supervise(config_path, config, objective, profile="unified"):
+    recover_execution(config)
     stop = Path(config["paths"]["state"]) / "STOP"
     if stop.exists():
         print("Stop latch is set. Review partial work, then run: python -m local_agent resume")
@@ -90,6 +93,7 @@ def supervise(config_path, config, objective, profile="unified"):
     finally:
         if job:
             job.close()
+        recover_execution(config, child.pid)
 
 
 def main():

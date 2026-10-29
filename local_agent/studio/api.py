@@ -298,6 +298,7 @@ def create_app(config, token, manager=None):
 
     @app.get("/health")
     def health():
+        from local_agent.execution import descriptor
         return {**manager.diagnostics(), "pause_supported": False,
                 'restore_pending': manager.restore_pending.is_set(),
                 "dependencies": {name: importlib.util.find_spec(name) is not None
@@ -306,7 +307,8 @@ def create_app(config, token, manager=None):
                 "inference_defaults": asdict(InferenceOptions.from_config(config["model"])),
                 "permissions": {"origins": config["browser"]["allowed_origins"],
                                 "applications": list(config["desktop"]["applications"]),
-                                "commands": list(config["commands"])}}
+                                "commands": list(config["commands"]),
+                                "coding_execution": descriptor(config)}}
 
     @app.post('/backups')
     def backup(body: BackupBody):

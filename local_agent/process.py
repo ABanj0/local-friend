@@ -31,13 +31,20 @@ def terminate_tree(proc):
         proc.wait(timeout=10)
 
 
-def run_process(argv, cwd, policy, timeout=60, *, on_output=None, raw_output=False):
+def run_process(argv, cwd, policy, timeout=60, *, on_output=None, raw_output=False, stdin=None, windows_ssh=False):
     if raw_output and on_output is not None:
         raise ValueError("Internal raw command parsing cannot use an output stream")
     policy.check_stop()
     env = environment()
+    if windows_ssh:
+        expected = Path(os.environ.get("WINDIR", "C:/Windows")) / "System32/OpenSSH/ssh.exe"
+        if os.name != "nt" or Path(argv[0]).resolve() != expected.resolve():
+            raise ValueError("Windows SSH environment is restricted to the fixed OS transport client")
+        # Windows OpenSSH requires this OS directory even with explicit keys/config.
+        # It is client metadata, never forwarded to the guest or repository processes.
+        env.update({key: value for key, value in os.environ.items() if key.upper() == "PROGRAMDATA"})
     output, ident = CommandOutput(sanitize=not raw_output), uuid.uuid4().hex
-    proc = subprocess.Popen(argv, cwd=Path(cwd), env=env, stdin=subprocess.DEVNULL,
+    proc = subprocess.Popen(argv, cwd=Path(cwd), env=env, stdin=subprocess.DEVNULL if stdin is None else stdin,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     job, reader = None, None

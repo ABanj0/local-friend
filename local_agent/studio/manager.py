@@ -15,6 +15,7 @@ from local_agent.background import readiness_config
 from local_agent.captures import Captures
 from local_agent.command_output import accept_event as accept_command_output
 from local_agent.context import validate_notice as validate_context_notice
+from local_agent.execution import recover as recover_execution
 from local_agent.inference import InferenceOptions
 from local_agent.observability import validate as validate_trace
 from local_agent.safety import Policy, Stopped, redact
@@ -64,6 +65,7 @@ def _queued(pipe):
 class Manager:
     def __init__(self, config):
         self.config = config
+        recover_execution(config)
         self.store = Store(database_path(config))
         self.store.recover()
         self.capture_errors = Captures.recover(config["paths"]["state"])
@@ -256,7 +258,7 @@ class Manager:
                         job = WindowsJob(Handle())
                         startup.callback(job.close)
                     now = time.monotonic()
-                    state = {"process": proc, "pipe": parent, "job": job, "captures": captures,
+                    state = {"process": proc, "pipe": parent, "job": job, "captures": captures, "worker_pid": proc.pid,
                                           "conversation": conversation, "approvals": {}, "done": False,
                                           "stream": "", "goal": goal_id, "ready": False,
                                           "heartbeat": now, "phase": "starting",
@@ -392,6 +394,8 @@ class Manager:
                         state["process_closed"] = True
                     if state.get("captures"):
                         state["captures"].close()
+                recover_execution(self.config, state.get("worker_pid"))
+                with self.lock:
                     state.pop("cleanup_error", None)
                     return
             except Exception as exc:  # noqa: BLE001 -- retain ownership until every resource is closed
