@@ -1,5 +1,11 @@
 # Installed Studio: preserve an independent Ollama service
 
+Verified owner run (2026-10-27): report
+`.runtime/native-shared-model-1d6ac6dd25ce42ce824c8b54a294e4a0/report.json` passes this scope.
+Independent Ollama identity/listener/health survive native X close before the harness
+cleans up its fixture. Tested source and installed hashes match; fresh process/listener
+inspection confirms cleanup. This subcheck is complete; no repeat is currently needed.
+
 This operator-only P0-05 check observes the actual installed application. It checks that
 normal Studio closure leaves an independently running Ollama service alive and healthy.
 It does not submit tasks, load models, change configuration, or download anything.
@@ -24,6 +30,10 @@ Otherwise it starts an independent fixture using the installed configuration's e
 Ollama executable/model directory. That fixture belongs to a separate process job from
 Studio. After verifying that it survived Studio closure, the check stops only its fixture.
 An existing service remains untouched. The check never stops unrelated Python processes.
+
+Newly started fixtures have up to 20 seconds to become HTTP-healthy after binding their
+port; a listening socket alone is not readiness. The checker keeps the same owned process
+and fails if listener ownership changes. It does not restart an unhealthy existing service.
 
 The default deadline is 180 seconds (`--seconds` accepts 60–300). On completion, failure
 or interruption, cleanup attempts both separately owned process jobs. No elevated privileges
@@ -55,6 +65,11 @@ Without `--exercise`, preflight never launches Studio/Ollama and cannot pass nat
 `existing_studio_preserved` means close the current Studio normally before retrying.
 `backend_port_unavailable` means inspect port 17861; do not stop an unrelated listener.
 `unrecognized_model_listener` or `model_listener_ownership_changed` means ownership could
-not be established safely; inspect the service rather than killing it. A package mismatch,
+not be established safely; inspect the service rather than killing it. `model_health_deadline`
+means the owned fixture listened but never became healthy within its startup budget;
+`model_start_deadline` means no owned listener appeared. Reports include the check phase.
+An `independent_model_not_healthy` report from the initial version may be the corrected
+startup race: rerun the updated script without rebuilding Studio. If it persists for an
+already-running service, inspect that service without stopping an unrelated process. A package mismatch,
 missing dependency/configuration, missing owner confirmation, inaccessible native desktop,
 or deadline remains blocked. Keep the failed report and correct the reported prerequisite.

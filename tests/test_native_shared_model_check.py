@@ -293,6 +293,47 @@ class NativeSharedModelCheckTests(unittest.TestCase):
         self.assertTrue(model.fixture_started)
         probe.assert_called_once()
 
+    def test_owned_listener_waits_for_health_without_starting_another_process(self):
+        import psutil
+        model = MODULE['SharedModel']()
+        model.owner = Mock()
+        model.owner.proc.pid = os.getpid()
+        model.owner.proc.poll.return_value = None
+        expected = (os.getpid(), psutil.Process(os.getpid()).create_time())
+        observed = Mock(side_effect=[None, expected, expected, expected, expected])
+        health = Mock(side_effect=[False, False, True])
+        with (patch.dict(GLOBALS, listener=observed, launch=lambda _: (['fixture'], {}), healthy=health),
+              patch.dict(RECOVERY, descendants=lambda _: [], alive=lambda _: True)):
+            model.prepare({}, time.monotonic() + 2)
+            model.close()
+        self.assertEqual(health.call_count, 3)
+        model.owner.start.assert_called_once()
+        self.assertEqual(model.identity, expected)
+
+    def test_owned_health_deadline_and_identity_change_never_retry_another_listener(self):
+        import psutil
+        expected = (os.getpid(), psutil.Process(os.getpid()).create_time())
+        for changed in (False, True):
+            model = MODULE['SharedModel']()
+            model.owner = Mock()
+            model.owner.proc.pid = os.getpid()
+            model.owner.proc.poll.return_value = None
+            sequence = iter([None, expected])
+
+            def observe(changed=changed, sequence=sequence):
+                return next(sequence, (999999, 1) if changed else expected)
+
+            health = Mock(return_value=False)
+            with (patch.dict(GLOBALS, listener=observe, launch=lambda _: (['fixture'], {}), healthy=health),
+                  patch.dict(RECOVERY, descendants=lambda _: [], alive=lambda _: True)):
+                reason = 'model_listener_ownership_changed' if changed else 'model_health_deadline'
+                with self.assertRaisesRegex(CheckFailed, reason):
+                    model.prepare({}, time.monotonic() + .15)
+                model.close()
+            model.owner.start.assert_called_once()
+            if changed:
+                self.assertEqual(health.call_count, 1)
+
     def test_dripping_headers_cannot_extend_health_deadline(self):
         with socket.socket() as server:
             server.bind(('127.0.0.1', 0))

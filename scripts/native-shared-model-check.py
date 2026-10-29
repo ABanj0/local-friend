@@ -102,26 +102,38 @@ class SharedModel:
 
     def prepare(self, config, deadline):
         self.identity = listener()
-        if self.identity is None:
-            argv, env = launch(config)
-            self.fixture_started = True
-            self.owner.start(argv, env)
-            while time.monotonic() < deadline:
-                if self.owner.proc.poll() is not None:
-                    raise CheckFailed('model_fixture_exited')
-                observed = listener()
-                if observed is not None:
+        if self.identity is not None:
+            self.verify()
+            return
+        argv, env = launch(config)
+        self.fixture_started = True
+        self.owner.start(argv, env)
+        while time.monotonic() < deadline:
+            if self.owner.proc.poll() is not None:
+                raise CheckFailed('model_fixture_exited')
+            observed = listener()
+            if observed is not None:
+                if self.identity is None:
                     owned = RECOVERY['descendants'](self.owner.proc)
                     import psutil
                     owned.append((self.owner.proc.pid, psutil.Process(self.owner.proc.pid).create_time()))
                     if observed not in owned:
                         raise CheckFailed('model_listener_ownership_changed')
                     self.identity = observed
-                    break
-                time.sleep(.05)
-            if self.identity is None:
-                raise CheckFailed('model_start_deadline')
-        self.verify()
+                if observed != self.identity or not RECOVERY['alive'](self.identity):
+                    raise CheckFailed('model_listener_ownership_changed')
+                # Binding the port precedes HTTP readiness during real Ollama startup.
+                # Retry only this owned fixture; never restart an existing service.
+                if healthy():
+                    if time.monotonic() >= deadline:
+                        break
+                    if listener() != self.identity:
+                        raise CheckFailed('model_listener_ownership_changed')
+                    return
+            elif self.identity is not None:
+                raise CheckFailed('model_listener_ownership_changed')
+            time.sleep(.05)
+        raise CheckFailed('model_health_deadline' if self.identity else 'model_start_deadline')
 
     def verify(self):
         if (self.identity is None or listener() != self.identity
@@ -169,6 +181,7 @@ def run(root, *, exercise=False, seconds=180):
             report['status'] = 'ready'
         else:
             deadline = time.monotonic() + seconds
+            report['phase'] = 'model_startup'
             model.prepare(config, min(deadline, time.monotonic() + 20))
             report['independent_model_source'] = 'fixture' if model.fixture_started else 'existing'
             report['model_identity'] = {'pid': model.identity[0], 'created': model.identity[1]}
@@ -184,6 +197,7 @@ def run(root, *, exercise=False, seconds=180):
                 raise CheckFailed('existing_studio_preserved')
             native.start([str(executable)], env)
             report['native_pid'] = native.proc.pid
+            report['phase'] = 'native_connection'
             RECOVERY['confirm']('CONNECTED', 'Wait for Connected locally in this test Studio. '
                                 'Do not submit tasks.', native, attempts, deadline)
             if len(attempts.rows) != 1 or not RECOVERY['owned_listener'](native):
@@ -193,6 +207,7 @@ def run(root, *, exercise=False, seconds=180):
                 raise CheckFailed('model_is_not_independent')
             model.verify()
             report['owner_observations'].append('connected_locally')
+            report['phase'] = 'native_normal_close'
             RECOVERY['confirm']('CLOSED', 'Close this test Studio using X.', native, attempts,
                                 deadline, allow_exit=True)
             RECOVERY['wait_for'](lambda: native.proc.poll() is not None
@@ -202,12 +217,17 @@ def run(root, *, exercise=False, seconds=180):
             report['owner_observations'].append('normal_window_close')
             report['owned_descendants_exited_before_fixture_cleanup'] = True
             report['independent_ollama_same_identity_listener_and_health'] = True
+            report['phase'] = 'complete'
             report['status'], report['native_acceptance'] = 'passed', 'independent_ollama_normal_close_only'
     except CheckFailed as exc:
         report['reason'] = str(exc)
     except Exception:  # noqa: BLE001 -- never export raw config, errors, output or credentials
         report['reason'] = 'check_failed'
     finally:
+        if model.fixture_started or model.identity is not None:
+            report['independent_model_source'] = 'fixture' if model.fixture_started else 'existing'
+        if model.identity is not None:
+            report['model_identity'] = {'pid': model.identity[0], 'created': model.identity[1]}
         cleaned = True
         for owner in (native, model):
             try:
