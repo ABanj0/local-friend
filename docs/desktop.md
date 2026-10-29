@@ -1,8 +1,9 @@
 # Local Agent Studio
 
-Status: frontend builds and real backend/Ollama/browser UI tests pass; a Windows debug EXE
-exists. **Native Windows lifecycle and installed-release acceptance remain incomplete.**
-See `IMPLEMENTATION.md` for current results and remaining acceptance.
+Status: **native lifecycle and installed-product acceptance passed2026-10-28**, including
+Standard-user VM install, actual version upgrade, retained history/settings/attachments and
+both uninstall data modes. See `IMPLEMENTATION.md` and the [VM evidence guide](windows-test-vm.md).
+The0.1.1 package is an isolated upgrade-test fixture, not a published production update.
 The existing `launch.ps1` CLI remains available.
 
 ## Install prerequisites once
@@ -78,8 +79,9 @@ Seven new frozen startup/runtime/coding/MCP checks pass, with no skips. The orig
 build's17 frozen and7 Rust passes remain historical evidence. Managed model-store access
 remains denied for separately launched managed servers. Subsequent installed recovery
 verifies automatic normal-session startup, a completed330-token chat, and real browser/
-memory workflows against the installed executable. Full native controls/recovery/upgrade
-remain unverified; managed owned-server access limits are a separate execution context.
+memory workflows against the installed executable. Later native lifecycle/control and
+guest upgrade/uninstall acceptance pass; managed owned-server limits are historical and
+specific to their execution context. See the dated evidence in IMPLEMENTATION.md.
 The historical managed10013 download failure does not block this produced artifact. Use
 ` .\scripts\build-desktop.ps1 -ConfigLoaderRunner` if the normal Vite config loader hits
 the documented parent-directory access restriction. This uses a temporary build overlay.
@@ -126,7 +128,8 @@ Coding profiles need a separate Python interpreter:
 set `[runtime] python = 'C:\path\to\local-friend\.venv\Scripts\python.exe'` in production
 configuration. Without it the app uses `python` on PATH. A frozen backend is not a general
 Python interpreter. Real frozen-worker browser/screenshot and approved external-Python
-checks pass; clean-machine installation and native WebView acceptance remain unverified.
+checks pass; actual Standard-user guest installation and native WebView acceptance now pass.
+This does not bundle a development Python runtime or establish arbitrary coding-task quality.
 
 ### Reuse this repository's portable Ollama in the installed app
 
@@ -196,10 +199,19 @@ then perform the separate standard-user installation and upgrade checklist.
 For the produced installer, close development Studio first, run the setup EXE normally,
 then launch the installed application and complete the native checklist below. The generated
 installer script uses currentUser mode. Keep the existing production configuration/history;
-configure an approved disposable workspace for tool tests. Static uninstall source deletes
-application data only if its delete-data checkbox is selected and it is not updating.
-Actual standard-user install, upgrade and uninstall/data retention need observed testing;
-the successful build and first-run helper tests alone do not verify those behaviors.
+configure an approved disposable workspace for tool tests. Actual guest testing verifies
+default uninstall retains history/configuration; reinstall reopens the same records.
+Selecting **Delete the application data** removes both `%LOCALAPPDATA%\local.agent.studio`
+and `%APPDATA%\local.agent.studio`, including the default workspace inside app data.
+Move any wanted workspace files elsewhere before choosing that option. Unrelated outside
+projects and the independent Ollama installation/model service survive the tested uninstall.
+
+For repeatable clean-install/upgrade validation, use the separate
+[Windows test VM guide](windows-test-vm.md). An isolated packaging-only0.1.1 installer and
+the unchanged0.1.0 baseline are prepared under
+`.runtime/p0-05-install-upgrade-fixture/artifacts/`; neither is installed on the host.
+Their actual guest upgrade/retention/uninstall matrix passes2026-10-28. The0.1.1 fixture
+changes packaging metadata only; it is not a new production release.
 
 ## Validation
 
@@ -227,7 +239,7 @@ With built assets, `LIVE_STUDIO_UI=1` also enables `tests.test_studio_replay_ui`
 5,001 real SQLite events exactly once in rendered UI state through socket reconnect and
 backend restart. Its native connection handshake is bridged; it does not test native IPC.
 
-Desktop acceptance checklist (pending):
+Desktop acceptance repeat procedure (recorded scopes/results are in IMPLEMENTATION.md):
 
 1. Start the app, send two contextual chat messages, observe incremental tokens, copy an
    answer, regenerate it, cancel a long answer, and reopen the app to check history/settings.
@@ -428,7 +440,7 @@ at most 16 KiB and omits sensitive/oversized lines; owned Ollama output keeps at
 8,192 characters through streaming redaction. Arbitrary secret detection is not guaranteed.
 Output from an externally started Ollama service is not captured.
 
-### Remaining native validation
+### Native validation results and repeat procedure
 
 Installed focus, approval/no-replay, idle crash recovery and normal-close/reopen subchecks
 now have owner observations plus independent process/store evidence in IMPLEMENTATION.md.
@@ -437,14 +449,17 @@ normal session:1.09/2.02/4.05-second backoff lower bounds, exhausted automatic b
 connection, normal-close cleanup and independent Python preservation. P0-05 first is complete;
 do not repeat these steps unnecessarily. The native Windows file picker and text attachment
 also pass with owner confirmation and independently verified fixture/message/model evidence.
-Native Markdown export/download also passes with exact saved-file readback. Full product
-acceptance still requires capture/preview, native shared-Ollama preservation and tested
-clean installation/upgrade/history/uninstall. See IMPLEMENTATION.md.
+Native Markdown export/download also passes with exact saved-file readback. Native
+capture/preview also passes with owner confirmation and independently verified persisted
+JPEG metadata. The separate Standard-user Windows guest matrix now also passes actual
+installation/upgrade/history/uninstall, native controls and new real model replies. See
+IMPLEMENTATION.md and [the guest matrix](windows-test-vm.md); P0-05 third is complete.
 
-After completing capture/preview and closing Studio normally, use the
-[independent-Ollama native check](native-shared-model-check.md) for the remaining service
-preservation scenario. It starts its own independent fixture when needed, so no separate
-model terminal is required. Its tests pass; the owner-session native exercise is pending.
+The [independent-Ollama native check](native-shared-model-check.md) now also passes in the
+owner's installed session: the model survives Studio normal close, then the harness cleans
+only its own fixture. The guest matrix independently preserves its actual Ollama identity
+through upgrade and both uninstall modes. Completed checks need no repeat unless relevant
+changes or a regression justify it. OS-isolated agent execution remains a separate gap.
 
 Use the [bounded native startup diagnostic](native-diagnostics.md) to collect safe
 failure categories before repeating these acceptance steps. It never certifies the UI.
@@ -465,4 +480,4 @@ Its existing instance was preserved. Component/browser passes do not close this 
    child only. Verify bounded recovery, interrupted status and no repeated action.
 5. Close Studio normally. Confirm its backend/workers exit and independently launched
    Python/Ollama processes remain alive. Record native results separately from browser
-   tests; installer and upgrade acceptance remain pending.
+   tests. Installer/upgrade acceptance is now recorded separately in the completed VM matrix.
