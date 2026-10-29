@@ -109,22 +109,25 @@ cold/runtime adoption remains incomplete.
 ## Desktop application work
 
 Local Agent Studio uses Tauri 2 / React / TypeScript / Tailwind, a FastAPI/WebSocket backend,
-SQLite persistence, and the existing local agent tools. A compiled Windows debug executable
-exists. Browser-based UI acceptance and development build checks pass; **native Windows
-end-to-end acceptance and a verified installer remain incomplete**.
+SQLite persistence, and the existing local agent tools. **Native Windows lifecycle and
+installed-product acceptance pass**, including Standard-user VM installation, actual
+version upgrade, retained history/settings/attachments and both uninstall data modes.
 
 Start with [desktop setup, launch, build and troubleshooting](docs/desktop.md).
 P0-05 lifecycle changes add bounded in-memory diagnostics and three automatic recovery
 attempts with manual fallback. Interrupted tasks are never replayed. Component and
-browser checks pass; native acceptance remains open after a managed-session WebView2
-resource conflict. See [current evidence](IMPLEMENTATION.md).
+browser checks and actual native checks pass at their documented scopes. Earlier managed-
+session WebView2 conflicts are preserved as historical failures. See [current evidence](IMPLEMENTATION.md).
 After installing prerequisites, run ` .\scripts\setup-desktop.ps1`, then
 ` .\desktop-dev.ps1`. The intended production build command is
 ` .\scripts\build-desktop.ps1 -ConfigLoaderRunner`. The owner-session build produced
 `desktop/src-tauri/target/release/bundle/nsis/Local Agent Studio_0.1.0_x64-setup.exe`.
 Artifact/source hashes match the manifest;17 frozen runtime/security/approved-coding/live-
 model browser,1 frozen MCP and7 Rust checks pass. Artifact hashes and build inputs are
-recorded in `dist/release-manifest.json`; native installation/upgrade remain unverified.
+recorded in `dist/release-manifest.json`. Actual0.1.0→0.1.1 guest upgrade preserves146
+original logical records/configuration.0.1.1 is a packaging-only test fixture, not a public
+update. See the [VM test matrix](docs/windows-test-vm.md). Default uninstall retains data;
+**Delete the application data** also deletes the default workspace inside Studio app data.
 
 If the installed app reports **Ollama is missing** while using this checkout's portable
 runtime, install the updated package, close Studio and run
@@ -170,7 +173,7 @@ For exact commands, expected results and remedies for each open requirement, fol
 | Task lifecycle | Atomic completion, owned-worker cleanup, storage retry without action replay, heartbeat/phase/task budgets and approval waits verified. Captured-boundary replay, bounded acknowledged delivery and RAM-gap recovery are verified. |
 | Real-model coding acceptance | **1 passed, no skips**, 20.049s. Qwen fixed the seeded counter, generated five tests, passed eight project tests and reviewed its diff; independent rerun and six behavior checks passed. |
 | Normal-session browser validation, user-reported | **111 tests: 99 passed, 12 skipped**, 36.246s, after the public-test repair. All four browser tests enabled; skipped model/desktop/UI checks are not passes. |
-| Normal-session Notepad validation, user-reported | **111 tests: 96 passed, 15 skipped**, 48.994s. Physical launch/type/save/file readback passes; wider desktop and native Studio behavior remain unverified. |
+| Normal-session Notepad validation, user-reported | **111 tests: 96 passed, 15 skipped**, 48.994s. Physical launch/type/save/file readback passes; broader desktop-task coverage remains limited. Native Studio acceptance is recorded separately below. |
 | WebSocket security acceptance | **9 passed, no skips** against real isolated backends: invalid/missing authentication, timeout, malformed frames/cursors, forbidden origins and valid snapshots. |
 | Startup compensation, refreshed for P0-02 | **10 passed, no skips**: real gated workers, startup fault/cleanup checks, redacted API failure and explicit retry. |
 | Durable replay, sockets and rendered UI | **15 passed, no skips**, 25.531s; all 5,001 events once through reconnect/backend restart, slow clients, transient privacy and cursor gaps. Six separate Node state tests also pass. |
@@ -178,7 +181,7 @@ For exact commands, expected results and remedies for each open requirement, fol
 | Python lint | Ruff passed. Dependencies and lockfiles are unchanged. |
 | Local inference / GPU / tools / vision / local browser | Prior 2026-10-22 architecture audit: **11 of 12 live tests passed**; combined model-driven browser/file workflow passed. These model measurements are historical; current socket tests require no inference. |
 | Public browser | **Passed in the user's normal Windows session**, using Playwright's testing demo: extraction, app-route navigation, two tabs and draft input with no submission. Managed-session restrictions remain separate. |
-| Frontend / Rust / Windows delivery | Current TypeScript and Vite production builds pass. Prior Rust development check passed; debug EXE exists. Notepad acceptance passes; wider desktop/native lifecycle and installed release remain unverified. |
+| Frontend / Rust / Windows delivery | Builds/packaging and native lifecycle pass at their documented scopes. Standard-user Windows guest native controls, real model/tool workflows, actual version upgrade/retention and both uninstall modes pass2026-10-28.54 relevant regressions pass/1 diagnostic skipped; Ruff passes. Signing/public distribution and general task quality are separate. |
 
 Skips are not passes. See [current results and historical evidence](IMPLEMENTATION.md),
 the [roadmap](ROADMAP.md), and the versioned [lockfile/source baseline manifest](docs/acceptance-baseline.json).
@@ -186,12 +189,14 @@ The manifest records exact locked dependency versions and source hashes at P0-01
 a point-in-time snapshot. Later changes are recorded in IMPLEMENTATION.md. Its local source
 snapshot supports review without creating a Git commit. P0-01 through P0-04 and P1-01's
 registry/profile contract are verified at their documented scopes. P0-05 native/install
-gates remain open. Current model access is available through the existing service.
+gates are complete at local installer scope. Current model access is available through the existing service.
 P1-02 A/B's verifier, search, patch and command workflows satisfy their documented
 engineering and counted real-model acceptance contracts. P1-08 A's Studio diagnostics
 and B's corpus/runner gate are verified; the five baseline workflow failures remain.
-Next: P1-04 numbered migrations and durable operation records. This is ongoing roadmap
-work, not full platform acceptance.
+Next unchecked capability: P1-07's disposable isolated execution backend; it requires
+supported VM control and enforced staging/network boundaries. The release-test VM/SSH
+transport alone supplies neither. Other model-review/routing benefit gates remain failed.
+This is ongoing roadmap work, not full platform acceptance.
 
 ## Installation
 
