@@ -1,5 +1,42 @@
 # Feature Gap Analysis
 
+Publication status (2026-10-28): an opt-in Hyper-V command backend is now present in
+source, with input staging, ownership leases and fail-closed dispatch. Its live isolation,
+canary/network/cancellation and restart acceptance remains incomplete; P1-07 stays open.
+See [execution backend scope](docs/execution-backends.md). Earlier statements that no
+backend exists or host provider access is denied describe the dated stages below.
+
+F12 installed-product gap closed2026-10-28: actual Standard-user VM native controls,
+Ollama chat/attachment/approval/cancel,0.1.0→0.1.1 upgrade/config/history retention and both
+native uninstall data modes pass. Logical records, attachment bytes/binding and preference
+are preserved across upgrade/reinstall; post-upgrade/reinstall generation is real. Explicit
+delete removes Studio app data including its default workspace; unrelated files/Ollama
+survive. Evidence: .runtime/p0-05-vm-acceptance/validation.json.54 relevant regressions pass,
+1 opt-in diagnostic is skipped; Ruff passes. Initial clean installation includes owner
+observation plus independent installed readback. Signing/public distribution and broader
+autonomous-task quality are not inferred. F02/P1-07 remains missing: this release-test
+guest/SSH transport does not implement a disposable, network-restricted execution backend.
+
+F09 new-model gate measured (2026-10-27):4B read-only review completes24 inputs/72 calls
+on unchanged protocol2; self-review and specialist each match20/24 versus17/24 first pass.
+No strict specialist benefit is observed. Existing9B negative evidence remains, and full
+P2-04 delegation remains unimplemented/unaccepted. This distinct role trial does not
+override failed4B tool-workflow/routing qualification. Evidence:
+.runtime/p2-04-4b-review/validation.json.
+
+F10 second candidate measured (2026-10-27):4B acquisition, three real capability checks
+and all60 first workflow executions are complete.53 passed/5 failed/2 blocked fails the
+existing quality gate despite8/8 safety; it is not an eligible routing alternative. Original
+preflight blocks and completion provenance remain; no executed outcomes are retried or
+relabelled. P2-05 stays open for qualified paired routing evidence/implementation. See
+.runtime/p2-05-candidate-4b/validation.json.
+
+F12 clean-upgrade prerequisites prepared (2026-10-27): two distinct-version NSIS installers
+are available with verified metadata/hashes and seven passing native checks. Owner requests
+a separate VM; Hyper-V host/ISO/standard-user guest setup is documented but unexecuted.
+The clean-install/upgrade/history/uninstall gap remains open; VM preparation is not P1-07
+isolation implementation. See docs/windows-test-vm.md and the fixture validation record.
+
 F12 native capture/preview verified (2026-10-27): owner confirms the preview appears and
 read-only metadata verifies two valid new1600x900 JPEG captures with matching stored sizes.
 No raw image export or model-image submission claim. Together with earlier native controls

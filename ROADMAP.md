@@ -1,5 +1,157 @@
 # Development Roadmap
 
+Publication status (2026-10-28): an opt-in Hyper-V command backend is now present in
+source, with input staging, ownership leases and fail-closed dispatch. Its live isolation,
+canary/network/cancellation and restart acceptance remains incomplete; P1-07 stays open.
+See [execution backend scope](docs/execution-backends.md). Earlier statements that no
+backend exists or host provider access is denied describe the dated stages below.
+
+P1-07 resumed2026-10-28: actual Hyper-V management role/provider now work without a full
+Administrator token. A separately identified imported execution VM has pre-boot deny-all
+ACLs, Standard-user pinned-key SSH, bounded resources and sealed post-bootstrap networking.
+The existing release VM remains running and unchanged. Initial probes are not full
+acceptance; backend integration, clean baseline, reviewed staging, host canary/network/
+cancel/recovery and regressions remain pending. Keep P1-07 unchecked. See IMPLEMENTATION.md.
+Earlier provider-denied status below is historical, superseded by access-restored.json.
+
+P0-05 third completed (2026-10-28): actual Standard-user Windows guest native controls,
+real Ollama attachment reply/copy/cancel, exact184-byte export and screenshot preview pass.
+The0.1.0→0.1.1 NSIS upgrade preserves all146 original logical records/configuration;
+default uninstall/reinstall preserves162 current records and a new real reply succeeds.
+Explicit native delete-data uninstall removes guest Studio Local/Roaming data and its
+default workspace, preserving the outside project/source and independent Ollama identity.
+Final owned processes/tasks/listeners are absent.54 regression tests pass,1 diagnostic is
+skipped; Ruff passes. No host production/app source change. Evidence:
+.runtime/p0-05-vm-acceptance/validation.json. Earlier pending release statements below are
+historical. P1-07 remains separate: host Get-VM still denies access and this guest has no
+implemented/enforced isolated-agent execution backend. Failed model benefit gates remain.
+
+Guest SSH automation verified (2026-10-28): exact console SHA256 host-key match is pinned;
+key-only SSH actually logs in as StudioTest with standard_user=true. New current-user
+temporary key replaces the unreadable former sandbox key; obsolete guest authorization is
+revoked and fresh login succeeds. Direct readback verifies installed0.1.0 native/backend
+hashes, local Ollama0.40.12 with the expected9B digest, and the exact14-byte approved
+artifact/hash. No password/admin login or new firewall change. P0-05 third remains open
+for remaining native/upgrade/history/uninstall checks; P1-07 is not inferred. Evidence:
+.runtime/p0-05-vm-ssh/guest-readonly-evidence.json and IMPLEMENTATION.md.
+
+Managed VM SSH transport restored (2026-10-28): after owner permission change, actual
+TCP22 returns the Windows OpenSSH9.5 banner and strict ssh.exe reaches unknown-host-key
+verification. Earlier network-denial blocker is resolved at transport scope. Guest host
+identity and key-only Standard-user authentication are pending; enrollment operator parses
+and refuses the host account. No SSH login or release completion is inferred. Evidence:
+.runtime/p0-05-vm-ssh/ and IMPLEMENTATION.md.
+
+SSH transport split resolved (2026-10-28): owner normal-host TCP22 now succeeds following
+the scoped rule-profile change, with source192.0.2.1. Actual managed SSH still fails
+before authentication with connection Permission denied. Guest network access is ready
+from normal Windows; this chat's network grant and later key/host identity verification
+remain prerequisites. No further guest firewall broadening or release completion. See
+.runtime/p0-05-vm-ssh/after-profile-fix.json and IMPLEMENTATION.md.
+
+Guest SSH alternative investigated (2026-10-28): identified VM IPv4/MAC match and owner
+confirms192.0.2.2/gateway192.0.2.1. Local key-only client preparation validates,
+but actual TCP22 gets Windows10013 and ssh.exe exits255/connection Permission denied
+before authentication. Guest SSH readiness is unknown; no server/firewall changes made.
+SSH automation remains blocked on approved transport access; no native GUI or release
+acceptance is inferred. Evidence: .runtime/p0-05-vm-ssh/ and IMPLEMENTATION.md.
+
+Guest approved-file readback (2026-10-28): owner confirms the expected VM-APPROVAL-OK text
+and14-byte result after the fresh-approval instructions. Actual SHA256/journal output is
+not supplied; expected computed hash is not relabelled as observed. Next: seed attachment/
+preference retention fixtures and collect baseline evidence before upgrade. Full guest
+approval records, installed hashes, upgrade and uninstall acceptance remain open.
+
+Guest deny-first file observation (2026-10-28): owner reports Test-Path=False following
+the Agent denial instructions. Exact task denial/journal output remains uncollected;
+absence alone is not a fabricated approval record. Next: fresh approval and exact guest
+artifact readback. P0-05 third stays open; see IMPLEMENTATION.md.
+
+Guest actual Chat reply (2026-10-28): owner reports the installed app returns the requested
+VM-CHAT-OK marker using the local9B selection. Native connection and Chat generation are
+owner-observed. Next: denied then freshly approved Agent write with independent guest
+readback, followed by seeded upgrade/data acceptance. No primary release checkbox closes;
+model digest/GPU and full guest acceptance are not inferred. See IMPLEMENTATION.md.
+
+Guest installed connection (2026-10-28): owner reports Studio connected after the clean
+Standard-user precheck and hash-guarded0.1.0 launch instructions. This is native owner
+observation, not proof of model generation, installed payload hash or approved tool effects.
+Next: actual Chat reply and denial/fresh approval/file readback, then seeded upgrade/data
+acceptance. P0-05 third remains open; see IMPLEMENTATION.md.
+
+Guest clean-account prerequisite (2026-10-28): owner explicitly confirms actual pre-install
+values match StudioTest/StandardUser=true and StudioDataExists/StudioInstalled=false.
+This is owner-observed evidence, not managed guest inspection. Next: guest hash verification
+and normal0.1.0 installation from the scoped disc. Inference, real workflows, upgrade and
+data-retention acceptance remain open; no primary release checkbox closes.
+
+Guest model prerequisite update (2026-10-28): owner reports Ollama0.40.12 and an empty
+guest model listing. Runtime installation is now owner-observed; local model/inference
+and guest Studio acceptance remain unverified. Next: guest `ollama pull qwen3.5:9b`,
+then retain the resulting listing and proceed with the prepared installer data disc.
+No release checkbox closes; see IMPLEMENTATION.md.
+
+Guest runtime/download and scoped transfer progress (2026-10-28): owner reports Ollama
+downloaded in the VM; installation/version/model are not yet observed. Built a read-only
+148,260,864-byte STUDIO_TEST data ISO with exactly two original installers, checksums,
+instructions and a read-only guest account/footprint observer. All five actual ISO readbacks
+match SHA256/byte counts; observer syntax passes. No credentials/history/weights/shares or
+new dependencies; no VM attachment/guest installation is inferred. Next: guest Ollama
+version/local9B pull, clean checkpoint, attach the data disc and verify the guest account/
+empty Studio profile before installing0.1.0. P0-05 third remains open. Evidence:
+.runtime/p0-05-vm-transfer/validation.json and docs/windows-test-vm.md.
+Three subsequent checks confirm unchanged managed VM access denial and no guest runtime/
+model results. Continuous execution is blocked pending those owner observations and VM
+operations; all unverified acceptance remains unchecked. See IMPLEMENTATION.md.
+
+Guest desktop/account progress (2026-10-28): owner confirms the named VM window, Windows
+desktop and StudioTest sign-in. This supersedes the boot-failure prerequisite below; guest
+group membership and actual installer/runtime acceptance remain unverified. Both retained
+0.1.0/0.1.1 installers rehash correctly. Next: guest per-user Ollama setup, scoped installer
+transfer and clean standard-user acceptance. No release checkbox closes. Evidence:
+.runtime/p0-05-vm-guest/readiness.json and IMPLEMENTATION.md.
+
+VM boot recovery (2026-10-28): owner reaches the firmware boot-failure summary; the VM
+directory and virtual disk now exist. Managed provider inspection remains denied. Remove
+the setup script's start-before-console timing hazard: newly created VMs stay off until
+the owner clicks Start in the open console.11 operator/discovery tests pass,0 skipped;
+Ruff/PowerShell parse pass. Preserve the existing VM and retry its DVD keypress prompt;
+successful Windows Setup boot and all guest acceptance remain unverified. Evidence:
+.runtime/p0-05-vm-boot/validation.json and docs/windows-test-vm.md.
+
+VM setup operator prepared (2026-10-28): owner supplies the Windows ISO. Corrected its
+duplicate .iso.iso extension; the expected Windows11.iso is now present,9,047,330,816 bytes.
+scripts/new-windows-test-vm.ps1 provides one normal Administrator PowerShell command for
+the documented VM configuration. Eight simulated safety contracts plus three discovery
+checks pass, no skips; Ruff and PowerShell parsing pass. Actual execution fails closed on
+provider Access denied before creating a VM folder. Owner must run the command in the
+normal elevated session; guest setup and actual acceptance remain open. Evidence:
+.runtime/p0-05-vm-setup/validation.json. Earlier missing-ISO notes below are historical.
+
+VM prerequisite update (2026-10-28): Hyper-V commands are now installed and vmms is running.
+Managed Get-VMHost/Get-VM/Get-VMSwitch return Access denied; no Windows ISO is found in the
+documented workspace or Downloads, and the intended VM directory is absent. P0-05 guest
+acceptance and P1-07 remain open. Next: normal administrator-session provider check and
+the owner's ISO path, then the documented new VM setup. No host feature/access change or
+test rerun. See docs/windows-test-vm.md and IMPLEMENTATION.md.
+Three resumed checks retain these blockers; continuous execution is blocked pending the
+owner's provider/ISO/guest setup. No remaining acceptance checkbox is closed by the audit.
+
+New4B read-only review candidate measured (2026-10-27): unchanged protocol2/24 inputs/
+72 role calls complete. Baseline17/24, self-review20/24, specialist20/24; zero specialist
+wins/regressions, so no strict benefit. Existing9B evidence is retained; no delegation or
+default/routing change. P2-04 remains open. Next external release/isolation prerequisite
+is the requested Hyper-V/Windows ISO/guest setup. Evidence:
+.runtime/p2-04-4b-review/validation.json and IMPLEMENTATION.md.
+
+Second completion candidate evaluated (2026-10-27): approved4B download and three real
+capability/GPU checks pass. All60 first model executions are observed:53 passed,5 failed,
+2 blocked; eight safety cases pass with no unauthorized effects. Eight original preflight-
+only slots were completed after a bounded stable-snapshot guard fix; no executed outcome
+was retried/replaced and the original report remains. Candidate is not qualified for routes;
+9B stays the default. Native throughput110.22 tokens/s is not a paired9B latency comparison.
+Evidence: .runtime/p2-05-candidate-4b/validation.json and IMPLEMENTATION.md.
+
 Clean-install/upgrade preparation (2026-10-27): owner requests a separate VM and approves
 qwen3.5:4b acquisition/evaluation. Hyper-V setup instructions are in docs/windows-test-vm.md;
 host feature enablement/ISO/guest setup remain owner prerequisites. Built a separate
@@ -851,8 +1003,19 @@ an immutable snapshot; subsequent changes and evidence are recorded separately.
   1 frozen MCP and7 Rust checks pass, zero skips. Packaging increment now closes;
   installer execution/payload-after-install/native acceptance/upgrade remain third/first.
   Evidence: .runtime/p0-05-owner-installer-verification/validation.json.
-- [ ] **Third increment:** install as a standard user and repeat core native flows, including
+- [x] **Third increment:** install as a standard user and repeat core native flows, including
   physical dialog/clipboard/capture/export and approval/cancel behavior.
+  Verified2026-10-28 in the dedicated Standard-user VM: real installed WebView/IPC/Ollama,
+  exact denial/approval evidence, physical picker/clipboard, capture/preview/export, Stop,
+  changed preference, actual0.1.0→0.1.1 upgrade, logical config/history/attachment retention,
+  real post-upgrade/reinstall replies, default and explicit-data-delete native uninstall.
+  Original146/current162 records are preserved at their respective comparison boundaries;
+  outside files and independent Ollama survive. Guest fixture tasks/processes/listeners
+  are cleaned.54 regression passes/1 skipped, Ruff passes. Initial clean setup includes
+  owner observations followed by independent installed evidence. Test0.1.1 is not a public
+  release. See IMPLEMENTATION.md and .runtime/p0-05-vm-acceptance/validation.json.
+  Historical partial observations follow; their outstanding third-increment claims are
+  superseded by the completed guest matrix.
   Partial recovery verified2026-10-26: corrected installed code/config, settings backup
   preservation, automatic Studio-owned Ollama and a reported330-token chat. Real browser
   and memory workflows each pass against that installed executable in disposable fixtures.
@@ -1224,12 +1387,22 @@ an immutable snapshot; subsequent changes and evidence are recorded separately.
 - [ ] **Smallest increment:** define an execution-backend interface, label the current backend
   “trusted host execution,” and implement one explicitly configured disposable VM path.
   Start with code/test workflows; leave host desktop automation separate.
+  In progress2026-10-28: actual management role/provider restored. A distinct, owned imported
+  VM boots with bounded resources and host-enforced stateful SSH/deny-all ACLs; DHCP rules
+  are removed afterward. Original release VM stays running. Backend/lease/staging/checkpoint/
+  cancellation and full isolation acceptance remain unimplemented/unverified; do not close
+  this checkbox from preparation/probes. See current IMPLEMENTATION.md checklist.
 - **Acceptance/tests:** VM task cannot read/write host canary paths, inherit host secrets,
   or reach denied networks; only staged approved inputs/outputs cross the boundary. Cancel
   stops the owned VM task and does not affect unrelated processes. Unsupported host setup
   fails closed rather than silently using host execution for an isolation-required task.
 - **Depends on:** P0-03, P1-01, supported virtualization/Windows edition and any required
   user-approved host setup. No claim that Job Objects supply this isolation. **Contract:** F02.
+  Current2026-10-28: owner-created Windows release-test VM and verified Standard-user SSH
+  are available, but host Get-VM still returns permission denial. No configured disposable
+  agent-execution backend or enforced denied-network policy exists. Require supported
+  administrator-backed VM control and a dedicated safe execution image/network; do not
+  repurpose release-testing transport as an isolation guarantee or fall back to host tools.
   Current external gate(2026-10-25): no configured disposable VM provider/image; Get-VM,
   VBoxManage and vmrun are unavailable on this session PATH, and OS capability query is
   denied. Host support is unverified, not proven absent. Do not enable host features or
@@ -1384,6 +1557,12 @@ an immutable snapshot; subsequent changes and evidence are recorded separately.
     Grounded specialist19/24 loses to self-review21/24 with two regressions; no benefit
     gate pass. Keep full Studio parent/child integration deferred for this candidate.
     See docs/specialist-review-trial.md and .runtime/p2-04-review-trial/validation.json.
+    New-model feasibility2026-10-27: unchanged4B completion/schema-only trial completes
+    all24 inputs/72 calls with identical settings/corpus hashes. Baseline17, self-review20,
+    specialist20 exact-location matches; zero specialist wins/regressions means no benefit
+    gate pass. This distinct candidate does not exceed retained9B self-review21/24 and is
+    not adopted. No downloads/product changes or executed-workflow retries. P2-04 main
+    stays open. Evidence: .runtime/p2-04-4b-review/validation.json and IMPLEMENTATION.md.
 - **Acceptance/tests:** child permissions/budgets are subsets of parent's; deny mutations
   and recursive delegation; stop propagates and releases owned resources. Compare identical
   evaluation tasks against one agent; retain delegation only with a demonstrated quality
@@ -1420,6 +1599,20 @@ an immutable snapshot; subsequent changes and evidence are recorded separately.
   installed completion model. A reviewed fixed-corpus acquisition/evaluation plan is in
   .runtime/p2-05-second-model-readiness/plan.json. Explicit download permission is requested;
   no download, default change or routing implementation occurred before that prerequisite.
+  Updated2026-10-27: owner explicitly approves acquisition/evaluation. Existing pull script
+  succeeds; qwen3.5:4b Q4_K_M,3324173934 bytes, manifest d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04,
+  advertises completion/tools/vision. Three actual structured/GPU, executed-tool/readback
+  and vision tests pass, zero skips. Fixed60-model/eight-safety evaluation completed below;
+  no route/default change. See .runtime/p2-05-candidate-4b/.
+  - [x] Second-candidate acquisition/evaluation prerequisite: all60 actual first executions
+    have native metrics/oracles;53 passed,5 failed,2 blocked. Eight safety cases pass, all
+    effect observations clear. Eight slots originally stopped by pre-dispatch snapshot
+    guards execute only after bounded observation retry is fixed; all actually executed
+    negative outcomes remain identical, no workflow retries. Original unaccepted report
+    and completion provenance are retained. The candidate fails the existing quality gate
+    and is not adopted for routing. No paired9B/4B latency benefit is claimed. This closes
+    the measurement prerequisite only, not P2-05. Evidence:
+    .runtime/p2-05-candidate-4b/validation.json and IMPLEMENTATION.md.
 
 ## P3 — Optional enhancements with measured demand
 
@@ -1503,13 +1696,40 @@ native acceptance; a model report does not complete an independent verifier.
 
 ## Current blockers and how to resolve them
 
+Blocked execution2026-10-28 after three consecutive goal-turn occurrences: actual host
+Hyper-V group membership/token are absent and the named provider query is still denied.
+Guest SSH remains available. No independent incomplete increment passes its existing
+prerequisite/benefit gates. Goal is blocked, not complete; preserve all open requirements.
+Owner can choose the host management permission procedure or reviewed owner-run commands
+in docs/windows-test-vm.md. Verify access after that external change before starting the
+isolated execution backend. Evidence:
+.runtime/roadmap-gates/20261028-after-p005/blocked-audit-3.json.
+
+Current2026-10-28: P0-05 first/second/third are verified. The clean guest native/upgrade/
+retention/uninstall matrix is complete; do not repeat it without relevant changes. Next
+P1-07 still needs a managed disposable execution environment and enforceable network/input/
+output boundaries. Actual host Get-VM remains denied despite working guest SSH. Model
+review/routing/optimization gates retain their measured failures. P3 document/OCR remains
+optional without a demonstrated new input need. No other unchecked increment currently
+has satisfied prerequisites; no OS isolation or benefit is inferred from transport success.
+
+Historical2026-10-27: after the distinct4B review measurement, three fresh audits confirm unchanged prerequisites:
+managed-session VM management remains unavailable, the Windows ISO/owner setup result is
+pending, and tested review/routing/optimization benefit gates remain failed. Continuous
+execution is blocked, not complete. No remaining requirement is marked done by the audits.
+Evidence: .runtime/roadmap-gates/20261027-after-4b-review/audit-3.json. Owner next action:
+docs/windows-test-vm.md, followed by the New-VM result and ISO path.
+
 Current2026-10-27: SDK/MCP acquisition, embedding installation/integration and the NSIS
 build are resolved; they are not remaining setup steps. P0-05 first/second are complete.
 Native independent-Ollama normal-close acceptance now passes; its test fixture and native
 window closed after successful owned cleanup. Native capture/preview is now owner-confirmed
 with two valid new persisted image attachments; clean install/upgrade/data acceptance remains.
-Last available model metadata lists qwen3.5:9b and qwen3-embedding:0.6b, only one completion candidate. No second-
-model download approval or configured VM provider/image is present.
+Owner now approves the separate VM and qwen3.5:4b download/evaluation. Candidate is installed;
+its full first-attempt evaluation finishes53 passed/5 failed/2 blocked, with eight safety
+cases passed. It is not qualified for routing; the9B default stays unchanged.
+Hyper-V administrator setup/Windows ISO/guest installation remain prerequisites; no VM
+provider has been enabled automatically. See docs/windows-test-vm.md and candidate evidence.
 Failed specialist and optimization benefit gates are retained. Evidence:
 .runtime/roadmap-gates/20261027-after-native-operator/gates.json and the dated acceptance
 records above. The later native evidence supersedes those earlier pending subchecks.
@@ -1539,10 +1759,9 @@ no configured disposable VM provider/image is available. Evidence:
 
 | Remaining increment | Required next step |
 | --- | --- |
-| P0-05 third native/product | Test clean standard-user install/upgrade/history/uninstall in a disposable Windows environment. Capture/preview, independent-Ollama preservation, packaging and other completed native checks do not need repeating. |
-| P1-07 isolation | Select/configure an approved disposable VM provider/image; host code execution is not an isolation substitute. |
-| P2-04 child integration | First demonstrate benefit on the fixed review oracle; the measured candidate failed and remains inactive. |
-| P2-05 routing | Approve acquisition of a second completion candidate, or provide an already installed candidate, then evaluate it. The installed embedding model does not meet this dependency. |
+| P1-07 isolation | Release-test VM/SSH setup is complete. Supported administrator-backed disposable VM control, a dedicated execution image and denied-network boundary are still needed before implementing/verifying the isolated agent backend. Host provider access remains denied. |
+| P2-04 child integration | Both9B and newly measured4B review candidates fail the strict benefit gate. Preserve results and keep delegation inactive; do not integrate without demonstrated benefit. |
+| P2-05 routing | Approved4B evaluation is complete but fails the quality gate. Preserve the negative result and keep9B default; routes need a qualified second candidate and paired evidence. |
 | P3-02 A1b cold/adoption | Preserve the failed per-case result; do not adopt or retry-to-pass. A separate future candidate needs its own controlled evaluation. Never unload a shared service. |
 
 P3-01 remains optional with no demonstrated new document-input need. No remaining
@@ -1574,7 +1793,10 @@ Retain incomplete checks; do not infer completion from the A1a protocol harness.
 4. Record native evidence separately from `LIVE_STUDIO_UI` browser-harness results. UIA
    inspection/control/screenshots need their own observed checks beyond a typing test.
 
-### Installer: artifact built; clean-install/upgrade acceptance remains
+### Installer: clean-install/upgrade acceptance passed2026-10-28
+
+The actual guest matrix passed; the following is the repeat procedure for relevant changes.
+See .runtime/p0-05-vm-acceptance/validation.json and docs/windows-test-vm.md.
 
 1. Use the existing built NSIS artifact and release manifest; build/frozen packaging is
    already verified. Rebuild only for changed application inputs or a demonstrated failure.

@@ -1,5 +1,45 @@
 # Architecture Review
 
+Publication status (2026-10-28): an opt-in Hyper-V command backend is now present in
+source, with input staging, ownership leases and fail-closed dispatch. Its live isolation,
+canary/network/cancellation and restart acceptance remains incomplete; P1-07 stays open.
+See [execution backend scope](docs/execution-backends.md). Earlier statements that no
+backend exists or host provider access is denied describe the dated stages below.
+
+Installed-product validation completed2026-10-28: the actual Standard-user Windows guest
+uses the existing Tauri/React/FastAPI/frozen backend/Ollama architecture successfully, with
+native dialog/clipboard/capture/export/Stop and real model workflows. Actual0.1.0→0.1.1
+upgrade preserves146 logical records/configuration; default uninstall/reinstall preserves
+162 records and reopens retained attachment/settings with new inference. Explicit native
+delete-data uninstall removes both Studio app-data roots and the default workspace inside
+them, preserving outside files and the independent model process. No application rewrite
+or source change is needed. Final fixture processes/tasks/debug listeners are gone.
+Evidence: .runtime/p0-05-vm-acceptance/validation.json;54 regression passes/1 skipped, Ruff.
+This resolves P0-05's remaining release-validation gap at local unsigned-installer scope.
+SSH/VM release testing is not an execution-isolation backend: Hyper-V provider access is
+still denied here and no denied-network/staging/cancellation boundary is implemented.
+
+Read-only4B review follow-up (2026-10-27): the existing evaluator accepts the new model
+without code changes; identical protocol/settings/corpus yield baseline17/24, self-review
+20/24 and specialist20/24. Zero specialist wins/regressions fail the benefit gate. Preserve
+both model results and keep integrated delegation inactive. Actual24-input/72-call coverage
+is verified; semantic/general-review and cross-model speed claims are not established. See
+.runtime/p2-04-4b-review/validation.json and IMPLEMENTATION.md.
+
+Routing evidence updated (2026-10-27): approved4B model passes three real capability/GPU
+checks but its completed first-execution matrix yields53 passed/5 failed/2 blocked. Safety
+8/8 and effects are clear; strict quality gate fails. Eight pre-dispatch observation blocks
+are filled once with provenance; executed negatives are preserved. Do not adopt routes or
+infer paired latency benefit from110.22 native tokens/s. Existing9B/default/platform code
+is unchanged. Evidence: .runtime/p2-05-candidate-4b/validation.json.
+
+Release-test environment preparation (2026-10-27): owner chooses a separate VM. Hyper-V
+setup is documented against Microsoft guidance; no host feature/VM has been changed.
+An isolated packaging-only0.1.1 NSIS fixture builds alongside the retained0.1.0 baseline;
+versions and original-input hashes verify, seven native checks pass after supplying copied
+test-only Python dependencies. This is release-test preparation, not an OS-isolation backend
+or tested guest upgrade. See docs/windows-test-vm.md and IMPLEMENTATION.md.
+
 Native capture/preview gap resolved (2026-10-27): owner confirms the installed preview;
 two new JPEG capture records independently verify format/dimensions/size/hash. Images are
 unbound; no model-image analysis is inferred. Raw screen content is not exported and the

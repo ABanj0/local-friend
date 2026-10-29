@@ -1,5 +1,12 @@
 # Restricted-review development trial
 
+New-model follow-up (2026-10-27): the installed4B candidate completes the same protocol2,
+settings/corpus hashes and24 inputs/72 calls. Baseline17/24, self-review20/24 and specialist
+20/24; zero wins and zero regressions fail the strict improvement gate. No retries,
+retuning, delegation or default changes. Its tool-workflow qualification remains separately
+failed; this narrower structured read-only test does not override that result. Evidence:
+`.runtime/p2-04-4b-review/validation.json` and `IMPLEMENTATION.md`.
+
 P2-04 A0 is an evaluation prerequisite. It does **not** add a Studio tool, endpoint,
 automatic child, task-store relationship or permission grant. Full delegation remains
 incomplete until integration and its independent acceptance gates pass.
