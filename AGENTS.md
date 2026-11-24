@@ -272,3 +272,10 @@ When explicitly instructed to continue implementation or work on the roadmap:
 An increment is complete only when:
 
 1
+
+## Repository verification
+
+- Open Windows PowerShell at the root of the checkout you intend to verify. Use Git on PATH and the checkout's `.venv\Scripts\python.exe`. To prepare a fresh Windows Python 3.12 environment, run `uv sync --locked --python 3.12 --extra automation --extra desktop --extra dev --extra mcp`. The suite uses writable temporary directories, child processes, and local loopback sockets.
+- Run `.\scripts\validate.ps1`. A completed unittest run with `OK` and exit code 0 passes. Record skipped checks and their reasons separately.
+- Enable live checks when relevant. `-Browser` needs Playwright, its Chromium installation or an installed channel selected with `-BrowserChannel`, and network access for the public test site. `-Model` needs the configured local Ollama endpoint and model, with GPU acceleration for the GPU check. `-Browser -Model` adds the live cross-tool case. `-Desktop` needs an interactive Windows desktop, Notepad, and permission to move focus and type.
+- Leave independent opt-ins unset for the default run. Tests read their own `LIVE_*` flags, `LOCAL_AGENT_EVALUATION_BROWSER_TEST`, `LOCAL_AGENT_PROBE_MATRIX`, `FROZEN_BACKEND_TEST_EXE`, and `FROZEN_LIVE_MODEL`. Enable the relevant gate only when its required service, browser, or built backend is available. See the test skip reasons and [README.md](README.md#tests-and-troubleshooting) for coverage and setup.
